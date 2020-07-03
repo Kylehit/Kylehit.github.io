@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="QiZI8dkQFe2pRyl_eJSIXTMNjmZuPrc8pw0cOMn4jiw">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        Bash Command Line Basics - null
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> Exploring Microwave Applications. </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/images/profile.jpg" />
+        </div>
+        <div class="name">
+            <i>Shengkai Gao</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>HOME</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>TAGS</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archive">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>ARCHIVES</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>ABOUT</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>SEARCH</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bash-Command-Line"><span class="toc-text">Bash Command Line</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basics"><span class="toc-text">Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Creating-things"><span class="toc-text">Creating things</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Compress-and-extract-files"><span class="toc-text">Compress and extract files</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#File-Transfer"><span class="toc-text">File Transfer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tapping-the-power-of-Unix"><span class="toc-text">Tapping the power of Unix</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Wildcards-redirection-to-files-and-pipes"><span class="toc-text">Wildcards, redirection to files and pipes</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Aliases"><span class="toc-text">Aliases</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bash-Loops"><span class="toc-text">Bash Loops</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#substrings"><span class="toc-text">substrings</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exercise1"><span class="toc-text">Exercise1</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scripts-and-functions"><span class="toc-text">Scripts and functions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Shell-scripts"><span class="toc-text">Shell scripts</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Example"><span class="toc-text">Example</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Variables"><span class="toc-text">Variables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Functions"><span class="toc-text">Functions</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-complicated-example-of-Function"><span class="toc-text">A complicated example of Function</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Grep-and-find"><span class="toc-text">Grep and find</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Searching-inside-files-with-grep"><span class="toc-text">Searching inside files with grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Finding-files-with-find"><span class="toc-text">Finding files with find</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Combing-find-and-grep"><span class="toc-text">Combing find and grep</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Text-Manipulation"><span class="toc-text">Text Manipulation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Text-manipulation"><span class="toc-text">Text manipulation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Column-based-Text-processing-with-awk-scripting-language"><span class="toc-text">Column-based Text processing with awk scripting language</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fuzzy-finder"><span class="toc-text">Fuzzy finder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Excerise-Day2"><span class="toc-text">Excerise -Day2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Appendix-1-Regular-Expressions"><span class="toc-text">Appendix 1 Regular Expressions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-Regular-expressions"><span class="toc-text">Basic Regular expressions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Interval-Regular-Expressions"><span class="toc-text">Interval Regular Expressions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Extended-Regular-Expressions"><span class="toc-text">Extended Regular Expressions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Brace-大括号-expansion"><span class="toc-text">Brace (大括号) expansion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shorthand-Characters"><span class="toc-text">Shorthand Characters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Word-Boundaries"><span class="toc-text">Word Boundaries</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Anchor"><span class="toc-text">Anchor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#References"><span class="toc-text">References</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q-amp-A"><span class="toc-text">Q&amp;A</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Single-quote-double-quote-brackets-and-backstick"><span class="toc-text">1. Single quote, double quote, brackets and backstick</span></a></li></ol></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">search</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> Exploring Microwave Applications. </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        Bash Command Line Basics
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">Post：<span>2020-07-03 12:07:30</span></span>
+        
+        <span class="attr">Tags：/
+        
+        <a class="tag" href="/tags/#Shell" title="Shell">Shell</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content no-indent">
+        <h1 id="Bash-Command-Line"><a href="#Bash-Command-Line" class="headerlink" title="Bash Command Line"></a>Bash Command Line</h1><h2 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h2><p>ls -F  show files or directories</p>
+<p>ls -F -a   == ls -Fa   show all files and directories (including hidden ones) (there is . before the name)</p>
+<p>cd     —&gt; to home directory (user)</p>
+<p>cd /   —-&gt; to the top unix directory (root)</p>
+<p>cd -   —&gt; back to previous directory</p>
+<p>man   —-&gt; manual page</p>
+<ul>
+<li>q  quit</li>
+<li>b  previous page </li>
+<li>space  next page</li>
+<li></li>
+</ul>
+<p>ls —help</p>
+<p>cd c —-&gt; give all the possible expansion starts with ‘c’</p>
+<h3 id="Creating-things"><a href="#Creating-things" class="headerlink" title="Creating things"></a>Creating things</h3><p>mkdir</p>
+<p>nano —- create and edit txt file</p>
+<p>cat  ——- show file content</p>
+<p>rm -r —- recursively remove directories</p>
+<p>rmdir  —- remove directories (cannot remove when there are files in the directories)</p>
+<p>ls -l —- file attributes</p>
+<p>mv  </p>
+<ul>
+<li>mv chapter1/draft.txt chapter1/backup.txt ./    (move files)</li>
+<li>rename files</li>
+</ul>
+<p>cp </p>
+<h2 id="Compress-and-extract-files"><a href="#Compress-and-extract-files" class="headerlink" title="Compress and extract files"></a>Compress and extract files</h2><p>tar cvf data.tar data-shell/</p>
+<ul>
+<li>cvf —- c creating/archive  v visualize f  put all files in data-shell/ into data.tar (using the following tar archive for the operation)</li>
+<li>xvf — x unpack</li>
+<li>cvfz —- archive and using gzip to compress<ul>
+<li>tar cvfz data.tar.gz data-shell/</li>
+</ul>
+</li>
+<li>xvfz — unzip the gz and unarchive the tar</li>
+</ul>
+<p>gzip</p>
+<ul>
+<li>more efficient compression to ‘.gz’</li>
+</ul>
+<p>unzip</p>
+<ul>
+<li>Unzip the zip file</li>
+</ul>
+<p>cltrl + L —- clean the screen</p>
+<p>history —- show history commands</p>
+<p><code>tar</code> is by far the most widely used archiving tool on UNIX-like systems. Since it was originally designed for sequential write/read on magnetic tapes, it does not index data for random access to its contents. A number of 3rd-party tools can add indexing to <code>tar</code>. However, there is a modern version of <code>tar</code> called <strong>DAR</strong> (stands for Disk ARchiver) that has some nice features:</p>
+<ul>
+<li>each DAR archive includes an index for fast file list/restore,</li>
+<li>DAR supports full / differential / incremental backup,</li>
+<li>DAR has build-in compression on a file-by-file basis to make it more resilient against data corruption and to avoid compressing already compressed files such as video,</li>
+<li>DAR supports strong encryption,</li>
+<li>DAR can detect corruption in both headers and saved data and recover with minimal data loss,</li>
+</ul>
+<p>and so on. Learning DAR is not part of this course. In the future, if you want to know more about working with DAR, please watch our <a href="https://westgrid.github.io/trainingMaterials/tools/rdm" target="_blank" rel="noopener">DAR webinar</a> (scroll down to see it).</p>
+<h3 id="File-Transfer"><a href="#File-Transfer" class="headerlink" title="File Transfer"></a>File Transfer</h3><p>securely transfer file between remote system and local system</p>
+<p><code>scp</code> : need RSA key</p>
+<p><code>sftp</code></p>
+<p><code>scp</code> is useful, but what if we don’t know the exact location of what we want to transfer? Or perhaps we’re simply not sure which files we want to transfer yet. <code>sftp</code> is an interactive way of downloading and uploading files. Let’s connect to a cluster with <code>sftp</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[local]$ sftp userXXX@cassiopeia.c3.ca</span><br></pre></td></tr></table></figure>
+<p>This will start what appears to be a shell with the prompt <code>sftp&gt;</code>. However, we only have access to a limited number of commands. We can see which commands are available with <code>help</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">sftp&gt; help</span><br><span class="line">Available commands:</span><br><span class="line">bye                                Quit sftp</span><br><span class="line">cd path                            Change remote directory to &apos;path&apos;</span><br><span class="line">chgrp grp path                     Change group of file &apos;path&apos; to &apos;grp&apos;</span><br><span class="line">chmod mode path                    Change permissions of file &apos;path&apos; to &apos;mode&apos;</span><br><span class="line">chown own path                     Change owner of file &apos;path&apos; to &apos;own&apos;</span><br><span class="line">df [-hi] [path]                    Display statistics for current directory or</span><br><span class="line">                                   filesystem containing &apos;path&apos;</span><br><span class="line">exit                               Quit sftp</span><br><span class="line">get [-afPpRr] remote [local]       Download file</span><br><span class="line">reget [-fPpRr] remote [local]      Resume download file</span><br><span class="line">reput [-fPpRr] [local] remote      Resume upload file</span><br><span class="line">help                               Display this help text</span><br><span class="line">lcd path                           Change local directory to &apos;path&apos;</span><br><span class="line">lls [ls-options [path]]            Display local directory listing</span><br><span class="line">lmkdir path                        Create local directory</span><br><span class="line">ln [-s] oldpath newpath            Link remote file (-s for symlink)</span><br><span class="line">lpwd                               Print local working directory</span><br><span class="line">ls [-1afhlnrSt] [path]             Display remote directory listing</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>Notice the presence of multiple commands that make mention of local and remote. We are actually browsing two filesystems at once, with two working directories!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sftp&gt; pwd    # show our remote working directory</span><br><span class="line">sftp&gt; lpwd   # show our local working directory</span><br><span class="line">sftp&gt; ls     # show the contents of our remote directory</span><br><span class="line">sftp&gt; lls    # show the contents of our local directory</span><br><span class="line">sftp&gt; cd     # change the remote directory</span><br><span class="line">sftp&gt; lcd    # change the local directory</span><br><span class="line">sftp&gt; put localFile    # upload a file</span><br><span class="line">sftp&gt; get remoteFile   # download a file</span><br></pre></td></tr></table></figure>
+<p>And we can recursively put/get files by just adding <code>-r</code>. Note that the directory needs to be present beforehand:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sftp&gt; mkdir content</span><br><span class="line">sftp&gt; put -r content/</span><br></pre></td></tr></table></figure>
+<p>To quit, type <code>exit</code> or <code>bye</code>.</p>
+<blockquote>
+<p><strong>Exercise:</strong> Using one of the above methods, try transferring files to and from the cluster. For example, you can download bfiles.tar.gz to your laptop. Which method do you like best?</p>
+</blockquote>
+<p><strong>Note on Windows</strong>:</p>
+<ul>
+<li>When you transfer files to from a Windows system to a Unix system (Mac, Linux, BSD, Solaris, etc.) this can cause problems. Windows encodes its files slightly different than Unix, and adds an extra character to every line.</li>
+<li>On a Unix system, every line in a file ends with a <code>\n</code> (newline). On Windows, every line in a file ends with a <code>\r\n</code> (carriage return + newline). This causes problems sometimes.</li>
+<li>You can identify if a file has Windows line endings with <code>cat -A filename</code>. A file with Windows line endings will have <code>^M$</code> at the end of every line. A file with Unix line endings will have <code>$</code> at the end of a line.</li>
+<li>Though most modern programming languages and software handles this correctly, in some rare instances, you may run into an issue. The solution is to convert a file from Windows to Unix encoding with the <code>dos2unix filename</code> command. Conversely, to convert back to Windows format, you can run <code>unix2dos filename</code>.</li>
+</ul>
+<p><strong>Note on syncing</strong>: there also a command <code>rsync</code> for synching two directories. It is super useful, especially for work in progress. For example, you can use it the download all the latest PNG images from your working directory on the cluster.</p>
+<h3 id="Tapping-the-power-of-Unix"><a href="#Tapping-the-power-of-Unix" class="headerlink" title="Tapping the power of Unix"></a>Tapping the power of Unix</h3><h4 id="Wildcards-redirection-to-files-and-pipes"><a href="#Wildcards-redirection-to-files-and-pipes" class="headerlink" title="Wildcards, redirection to files and pipes"></a>Wildcards, redirection to files and pipes</h4><p>ls p*</p>
+<p>ls *th* </p>
+<p>wc —word count </p>
+<ul>
+<li>wc ethan.pdb<ul>
+<li>12  84 622 ethane.pdb</li>
+<li>#of lines  # of words  # of characters </li>
+<li>also 622 bytes</li>
+</ul>
+</li>
+<li>wc -l *.pdb</li>
+<li>wc -l *.pdb &gt; list.txt   <ul>
+<li>write the output into the file (standard output redirection to a file)</li>
+</ul>
+</li>
+</ul>
+<p>sort -n list.txt &gt; sort.txt </p>
+<ul>
+<li>-n  numerically</li>
+</ul>
+<p>head -3 sort.txt</p>
+<ul>
+<li>print first 3 lines of the file</li>
+</ul>
+<p>tail -3 sort.txt</p>
+<ul>
+<li>print last 3 lines of the file</li>
+</ul>
+<p><strong>Constructing complex commands with Unix pipes</strong></p>
+<p>For example,</p>
+<p>wc -l *.pdb &gt; list.txt</p>
+<p>sort -n list.txt &gt; sort.txt</p>
+<p>head -1 sort.txt</p>
+<p><em>construct these three lines into a single command ?</em></p>
+<p><code>wc -l *.pdb | sort -n | head -1</code></p>
+<h2 id="Aliases"><a href="#Aliases" class="headerlink" title="Aliases"></a>Aliases</h2><p>Aliases are one-line shortcuts/abbreviation to avoid typing a longer command, e.g.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ alias ls=&apos;ls -aFh&apos;</span><br><span class="line">$ alias pwd=&apos;pwd -P&apos;</span><br><span class="line">$ alias hi=&apos;history&apos;</span><br><span class="line">$ alias top=&apos;top -o cpu -s 10 -stats &quot;pid,command,cpu,mem,threads,state,user&quot;&apos;</span><br><span class="line">$ alias cedar=&apos;ssh -Y cedar.computecanada.ca&apos;</span><br><span class="line">$ alias weather=&apos;curl wttr.in/vancouver&apos;</span><br><span class="line">$ alias cal=&apos;gcal --starting-day=1&apos;  # starts on Monday</span><br></pre></td></tr></table></figure>
+<p>Now, instead of typing <code>ssh -Y cedar.computecanada.ca</code>, you can simply type <code>cedar</code>. To see all your defined aliases, type <code>alias</code>. To remove, e.g. the alias <code>cedar</code>, type <code>unalias cedar</code>.</p>
+<p>You may want to put all your alias definitions into the file <code>~/.bashrc</code> which is run every time you start a new local or remote shell.</p>
+<h3 id="Bash-Loops"><a href="#Bash-Loops" class="headerlink" title="Bash Loops"></a>Bash Loops</h3><p>echo —- print whatever behind this command</p>
+<p>To print the value of a variable, we need <code>echo $variable</code></p>
+<p>A easy example of <code>for</code> loop</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> *.dat</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$file</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>or we could write this easy example in one line by using semicolon.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> *.dat; <span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$file</span>; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>A <em>collection</em> is required behind <code>in</code>.</p>
+<p>We could create collections in several examples:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> &#123;1..10&#125;</span><br><span class="line"><span class="built_in">echo</span> &#123;1,2,5&#125;</span><br><span class="line"><span class="built_in">echo</span> &#123;a..c&#125;</span><br></pre></td></tr></table></figure>
+<p>Above two commands will create and output two collections as</p>
+<p>1 2 3 4 5 6 7 8 9 10</p>
+<p>1 2 5 </p>
+<p>a b c</p>
+<p>Note the collection is not a string.</p>
+<h4 id="substrings"><a href="#substrings" class="headerlink" title="substrings"></a>substrings</h4><p>${variable:0:3}  —— the first 3 characters of string variable</p>
+<p>Example: substract characters from strings</p>
+<h3 id="Exercise1"><a href="#Exercise1" class="headerlink" title="Exercise1"></a>Exercise1</h3><p>writing info into .bashrc is better.</p>
+<p>.bashrc_profile</p>
+<p>> v.s. &gt;&gt;</p>
+<ul>
+<li>> will overwrite the contents of the file</li>
+<li>>&gt; will contancate the content to the end of the file</li>
+</ul>
+<p><code>diff</code> — compare files and folders</p>
+<p><code>touch</code></p>
+<p>​    touch a{1..100}.txt  —— create 100 empty files named as a*.txt</p>
+<pre><code> echo {a..z}{1..2} ---- a1 a2 b1 b2 .....
+</code></pre><p>​     echo  a{1..3}.{txt,py}</p>
+<p><code>ps</code>  show all the process</p>
+<p>​    ps aux —- show all users’</p>
+<p><code>kill</code></p>
+<p>​    kill PID</p>
+<p>​    kill -9 PID  ——&gt; strongest killer</p>
+<p>uniq —-</p>
+<p><code>rsync</code></p>
+<p>rsync -Pva —inplace user120@cassiopeia.c3.ca:thesis/ .</p>
+<p>Using Unix pipes, write a one-line command to show the name of the longest <strong>*.pdb</strong> file (by the number of lines). Paste your answer here.</p>
+<p> wc -l *pdb | sort -n | tail -2 | head -1</p>
+<p><strong>PS1=”\u@\h \w&gt; “</strong>   —- changing the prompt</p>
+<p>this variable is just in this shell</p>
+<p>[user144@login1 ~]$ echo tmp/data-shell/molecules/*<br>tmp/data-shell/molecules/a.txt tmp/data-shell/molecules/cubane.pdb tmp/data-shell/molecules/ethane.pdb tmp/data-shell/molecules/list.txt tmp/data-shell/molecules/methane.pdb tmp/data-shell/molecules/octane.pdb tmp/data-shell/molecules/pentane.pdb tmp/data-shell/molecules/propane.pdb tmp/data-shell/molecules/sort.txt</p>
+<p><strong>for i in hello 1 2 * bye; do echo $i; done</strong></p>
+<p>This command will print the hello 1 2 and all files and directories in current directory and bye</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var=<span class="string">"sun"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$varshine</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;var&#125;</span>shine</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$var</span>"</span>shine</span><br></pre></td></tr></table></figure>
+<p>Redirection</p>
+<p>Default to the terminal</p>
+<p>mkdirr tmp 2&gt; error.txt</p>
+<p>The error will go into the file</p>
+<p>mkdirr tmp 1&gt;error.txt</p>
+<p>only to terminal</p>
+<p>mkdirr tmp &amp;&gt; error.txt</p>
+<p>both to file and terminal</p>
+<p>/dev/null is a ‘blackhole’</p>
+<p>mkdir tmp ; cd tmp</p>
+<p>run second command no matter the results of first command</p>
+<p>mkdirr tmp &amp;&amp; cd tmp</p>
+<p>only run second command when first command is successful </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">myvar=<span class="string">"hello"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$myvar</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;myvar:offset&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;myvar:offset:length&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;myvar:2:3&#125;</span>    <span class="comment"># 3 characters starting from character 2</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;myvar/l/L&#125;</span>    <span class="comment"># replace the first match of a pattern</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;myvar//l/L&#125;</span>   <span class="comment"># replace all matches of a pattern</span></span><br></pre></td></tr></table></figure>
+<p>/l/L replace first l with L</p>
+<p>//l/L replace all l with L</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">touch hello <span class="string">"hello there"</span> <span class="string">"hi there"</span> <span class="string">"good morning, everyone"</span></span><br><span class="line">ls *\ * <span class="comment"># List all the file with space in the filename</span></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> *\ *</span><br><span class="line"><span class="keyword">do</span> </span><br><span class="line"><span class="built_in">echo</span> mv <span class="string">"<span class="variable">$file</span>"</span> <span class="variable">$&#123;file// /_&#125;</span>  <span class="comment"># we need to include the file name in "" because the name is long with space</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>Question 20 </p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Write <span class="keyword">a</span> loop that concatenates all .pdb <span class="built_in">files</span> <span class="keyword">in</span> data-<span class="built_in">shell</span>/molecules subdirectory <span class="keyword">into</span> <span class="literal">one</span> <span class="built_in">file</span> called allmolecules.txt, prepending <span class="keyword">each</span> fragment <span class="keyword">with</span> <span class="keyword">the</span> name <span class="keyword">of</span> <span class="keyword">the</span> corresponding .pdb <span class="built_in">file</span>, <span class="keyword">and</span> separating different <span class="built_in">files</span> <span class="keyword">with</span> <span class="keyword">an</span> <span class="literal">empty</span> <span class="built_in">line</span>. Run <span class="keyword">the</span> loop, make sure <span class="keyword">it</span> works, bring <span class="keyword">it</span> up <span class="keyword">with</span> <span class="keyword">the</span> <span class="string">"up arrow"</span> key <span class="keyword">and</span> paste <span class="keyword">in</span> here.</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> *.pdb</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> ----- <span class="variable">$file</span> &gt;&gt; allmolecules.txt</span><br><span class="line">cat <span class="variable">$file</span> &gt;&gt; allmolecules.txt</span><br><span class="line"><span class="built_in">echo</span> &gt;&gt; allmolecules.txt</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TOPICCreate a loop <span class="keyword">that</span> writes <span class="keyword">into</span> <span class="number">10</span> files chapter01.md, chapter02.md, ..., chapter10.md. Each <span class="built_in">file</span> should <span class="keyword">contain</span> chapter-specific lines, e.g. chapter05.md will <span class="keyword">contain</span> exactly these lines:</span><br><span class="line"><span class="comment">## Chapter 05</span></span><br><span class="line">This <span class="keyword">is</span> <span class="keyword">the</span> <span class="keyword">beginning</span> <span class="keyword">of</span> Chapter <span class="number">05.</span></span><br><span class="line">Content will go here.</span><br><span class="line">This <span class="keyword">is</span> <span class="keyword">the</span> <span class="keyword">end</span> <span class="keyword">of</span> Chapter <span class="number">05.</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;01..10&#125; </span><br><span class="line"><span class="keyword">do</span> </span><br><span class="line"><span class="built_in">echo</span> \<span class="comment">#\# Chapter i &gt; chapter"$i".md</span></span><br><span class="line"><span class="built_in">echo</span> This is the beginning of Chapter <span class="string">"<span class="variable">$i</span>"</span> &gt;&gt; chapter<span class="string">"<span class="variable">$i</span>"</span>.md</span><br><span class="line"><span class="built_in">echo</span> Content will go here. &gt;&gt; chapter<span class="string">"<span class="variable">$i</span>"</span>.md</span><br><span class="line"><span class="built_in">echo</span> This is the end of Chapter <span class="string">"<span class="variable">$i</span>"</span>. &gt;&gt; chapter<span class="string">"<span class="variable">$i</span>"</span>.md</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>Its safe to put the expressions in quotes.</p>
+<h2 id="Scripts-and-functions"><a href="#Scripts-and-functions" class="headerlink" title="Scripts and functions"></a>Scripts and functions</h2><h3 id="Shell-scripts"><a href="#Shell-scripts" class="headerlink" title="Shell scripts"></a>Shell scripts</h3><p>.sh </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br></pre></td></tr></table></figure>
+<p>The shebang tells where to find interpreters.</p>
+<p>Run:</p>
+<p>1) bash process.sh</p>
+<p>2) change it to executable </p>
+<p>attributes</p>
+<p>rwx rwx rwx : the first set refers to ==the owner of the file (i.e., the user)==; the second set refers to ==the group that owns the file==; the third set refers to ==everybody else on the system==.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod u+x process.sh</span><br></pre></td></tr></table></figure>
+<p>Add executable permission of the user to this file.</p>
+<p>then we run</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./process.sh</span><br></pre></td></tr></table></figure>
+<p><strong>Note: You are unable to run the file through <code>process.sh</code>, because this command is not the PATH</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># this is shebang, which tells the compiler where to find interpreters.</span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#echo hello world!</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># return the first second and third argument passed to the script.</span></span><br><span class="line"><span class="comment">#echo $1 $2 $3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># return all arguments passed to it</span></span><br><span class="line"><span class="comment">#echo the arguments are $@</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> <span class="variable">$@</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$word</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>When you run the above code, give the input as </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./process.sh A B C D FUCK</span><br></pre></td></tr></table></figure>
+<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> molecule <span class="keyword">in</span> <span class="variable">$@</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="variable">$molecule</span></span><br><span class="line">  head -3 <span class="variable">$molecule</span></span><br><span class="line">  wc -l <span class="variable">$molecule</span></span><br><span class="line">  <span class="built_in">echo</span> -----</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>you could run:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./process.sh *.pdb</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">./process.sh ethane.pdb cubane.pdb</span><br></pre></td></tr></table></figure>
+<h3 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">myvar=3</span><br><span class="line"><span class="built_in">export</span> myvar1=5</span><br></pre></td></tr></table></figure>
+<p>When using <code>export</code>, the variable could be inherited by the scripts (say creating a new bash file. The variable could be accessed inside this shell.). However, without this, the variable is only available outside the script.</p>
+<p><code>printenv</code> or <code>env</code> will print all the environment variables. </p>
+<p>To reset a variable, use  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unset</span> myvar1</span><br></pre></td></tr></table></figure>
+<p><code>$HOME</code> variable  — home directory</p>
+<p><code>$PATH</code> variable, where shell will look for interpreters.</p>
+<p><code>$PWD</code> variable —- stores current directory</p>
+<p><code>$PS1</code> variable —— stores the format of the prompt</p>
+<p>For example, if the $PS1 is     <code>[\u@\h \W]\$</code> , the prompt looks like this <img src="D:\Dropbox\Dropbox\Grad_Study\Westgrid_Summer_School\Fig\image-20200527133916746.png" alt="image-20200527133916746" style="zoom: 50%;"></p>
+<p>Using <code>which ls</code> could find out where ‘ls’ file locates.</p>
+<h3 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h3><p>Functions are similar to scripts, except that we reference a function by its name. Therefore, <strong>once defined, a function can be run in any directory</strong>, whereas running a script in another directory requires its path.</p>
+<p>A convenient place to put all your function definitions is <code>~/.bashrc</code> file which is run every time you start a new shell (local or remote).</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># define a function </span></span><br><span class="line"><span class="function"><span class="title">greeting</span></span>()&#123;</span><br><span class="line"><span class="built_in">echo</span> hello!</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># see the function</span></span><br><span class="line"><span class="built_in">type</span> greeting</span><br><span class="line"></span><br><span class="line"><span class="comment"># run the function</span></span><br><span class="line">greeting</span><br></pre></td></tr></table></figure>
+<p><code>$@</code> show the values of arguments </p>
+<p><code>$#</code> show the number of arguments</p>
+<p>we could write the function in a .sh file</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">greeting</span></span>()&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">combine</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>after that we need to ==<code>source function.sh</code>==to load the definition into the shell. Every time you change the definition of the function, you have to execute source again.</p>
+<h4 id="A-complicated-example-of-Function"><a href="#A-complicated-example-of-Function" class="headerlink" title="A complicated example of Function"></a>A complicated example of Function</h4><p><code>$RANDOM</code> will generate random integer.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">combine</span></span>()&#123;</span><br><span class="line">  <span class="keyword">if</span> [ <span class="variable">$#</span> -eq 0]; <span class="keyword">then</span></span><br><span class="line">  	<span class="built_in">echo</span> No arguments specified. Usage: combine file1 [file2 ...]</span><br><span class="line">  	<span class="built_in">return</span> 1</span><br><span class="line">  <span class="keyword">fi</span> </span><br><span class="line">  dir=<span class="variable">$RANDOM</span><span class="variable">$RANDOM</span></span><br><span class="line">  mkdir <span class="variable">$dir</span></span><br><span class="line">  mv <span class="variable">$@</span> <span class="variable">$dir</span></span><br><span class="line">  <span class="built_in">echo</span> moved these files into <span class="variable">$dir</span> successfully.</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>.bashrc</code>: Could put the function definitions into this file. Then when the shell is started, the <code>.bashrc</code> will be loaded. So you dont need to source your function everytime</p>
+<h2 id="Grep-and-find"><a href="#Grep-and-find" class="headerlink" title="Grep and find"></a>Grep and find</h2><h3 id="Searching-inside-files-with-grep"><a href="#Searching-inside-files-with-grep" class="headerlink" title="Searching inside files with grep"></a>Searching inside files with <code>grep</code></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># partly matching</span></span><br><span class="line">grep day haiku.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#exactly matchig</span></span><br><span class="line">grep -w day haiku.txt</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>grep</code> is case-sensitive </li>
+<li>-i —-&gt; set grep to case insensitive</li>
+<li>-n   —-&gt; return line number</li>
+<li>-v  —-&gt; print all the lines that DOESN’T match</li>
+<li>more flags: see <code>man grep</code></li>
+<li></li>
+</ul>
+<h3 id="Finding-files-with-find"><a href="#Finding-files-with-find" class="headerlink" title="Finding files with find"></a>Finding files with <code>find</code></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#search the file with name of 'haiku.txt' within current directory</span></span><br><span class="line">find . -name haiku.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># search the file with name of 'haiku.txt' within current directory and its child directories</span></span><br><span class="line">find . -name <span class="string">"*.txt"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># This works the same as the first command</span></span><br><span class="line"><span class="comment"># This because The bash will expand the pattern of *.txt'; then do the find</span></span><br><span class="line">find . -name *.txt </span><br><span class="line"></span><br><span class="line"><span class="comment">#find all with the type of file</span></span><br><span class="line">find . -<span class="built_in">type</span> f</span><br><span class="line"></span><br><span class="line"><span class="comment">#find all with the type of directory</span></span><br><span class="line">find . -<span class="built_in">type</span> d</span><br><span class="line"></span><br><span class="line"><span class="comment"># setting searching depth.</span></span><br><span class="line">find . -maxdepth 1 -<span class="built_in">type</span> d</span><br></pre></td></tr></table></figure>
+<h3 id="Combing-find-and-grep"><a href="#Combing-find-and-grep" class="headerlink" title="Combing find and grep"></a>Combing <code>find</code> and <code>grep</code></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># aggregate the result </span></span><br><span class="line">$(find . -name <span class="string">"*.txt"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> $(find . -name <span class="string">"*.txt"</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  grep day <span class="variable">$file</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Another way</span></span><br><span class="line"></span><br><span class="line">find . -name <span class="string">"*.txt"</span> | xargs grep day</span><br></pre></td></tr></table></figure>
+<p>==xargs==</p>
+<p>The <code>xargs</code> command in UNIX is a command line utility for building an execution pipeline from standard input. Whilst tools like <a href="https://shapeshed.com/unix-grep/" target="_blank" rel="noopener"><code>grep</code></a> can accept standard input as a parameter, many other tools cannot. Using <code>xargs</code> allows tools like <code>echo</code> and <a href="https://shapeshed.com/unix-rm/" target="_blank" rel="noopener"><code>rm</code></a> and <a href="https://shapeshed.com/unix-mkdir/" target="_blank" rel="noopener"><code>mkdir</code></a> to accept standard input as arguments.</p>
+<p>For more, refer to <a href="https://shapeshed.com/unix-xargs/" target="_blank" rel="noopener">https://shapeshed.com/unix-xargs/</a></p>
+<h2 id="Text-Manipulation"><a href="#Text-Manipulation" class="headerlink" title="Text Manipulation"></a>Text Manipulation</h2><h3 id="Text-manipulation"><a href="#Text-manipulation" class="headerlink" title="Text manipulation"></a>Text manipulation</h3><p>Goals: learn <code>sed</code> <code>tr</code>   —- tr —- stands for translate /// translate or delete characters</p>
+<p><code>sed</code>: stream editor for filtering and transforming text</p>
+<p><strong>GNU version of sed and BSD version of sed have different options and arguments.</strong></p>
+<p><em>Using Address Ranges</em>: Addresses let you target specific parts of a text stream. You can specify line or even a range of lines.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Using sed to convert all 'invisible' to 'supervisible'</span></span><br><span class="line"></span><br><span class="line">sed <span class="string">'s/[Ii]nvisible/supervisible/g'</span> wellinvisibleMan.txt &gt; supervisible.txt</span><br><span class="line"><span class="comment"># 's' specifies the substitution operation ; By default, sed all only convert first match of each line; hence, we need to add 'g'</span></span><br></pre></td></tr></table></figure>
+<p>For <code>sed</code> command</p>
+<p><code>s/regexp/replacement</code> : Attempt to match <em>regexp</em> (could apply regular expression) against the pattern space. If successful, replace that portion matched with <em>replacement</em>. The <em>replacement</em> may contain the special character &amp; to refer to that portion of the pattern space which matched, and the special escapes \1 throughout \9 to refer to the corresponding matching sub-expressions in the <em>regexp</em></p>
+<p>==The character after the <em>s</em> is the delimiter. Pick one you like. As long as it’s not in the string you are looking for, anything goes.== And remember that you need three delimiters. If you get a “Unterminated `s’ command” it’s because you are missing one of them.</p>
+<p>For example: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">'s/\/usr\/local\/bin/\/common\/bin/'</span> &lt;old &gt;new</span><br><span class="line"></span><br><span class="line">sed <span class="string">'s_/usr/local/bin_/common/bin_'</span> &lt;old &gt;new</span><br></pre></td></tr></table></figure>
+<p>==`` is the same as \$( ). The command will execute within brackets and then the results will be returned. It’s better to use \$( ).==</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Delete all punctuation marks</span></span><br><span class="line"></span><br><span class="line">cat well.txt | tr -d <span class="string">"[:punct:]"</span> &gt; a1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Note There are some expressions specifically for tr command</span></span><br><span class="line"><span class="comment"># For example: [:punct:] --- all punctuation characters</span></span><br><span class="line"><span class="comment"># [:digit:]---- all digits</span></span><br><span class="line"><span class="comment"># Refer to   man tr</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># uppercase to lowercase</span></span><br><span class="line"></span><br><span class="line">cat a1.txt | tr <span class="string">'[:upper:]'</span> <span class="string">'[:lower:]'</span> &gt; a2.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># replace space with \n</span></span><br><span class="line"></span><br><span class="line">cat a2.txt | sed <span class="string">'s/ /\'</span>$<span class="string">'\n/g'</span> &gt; a3.txt</span><br><span class="line"><span class="comment"># I think we could just use </span></span><br><span class="line">cat a2.txt | sed <span class="string">'s/ /\n/g'</span> &gt; a3.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># \'$'\n  short for new line</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># remove empty lines</span></span><br><span class="line">sed <span class="string">'/^$/d'</span> a3.txt &gt; a4.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">cat a4.txt | sort | uniq -c &gt; a5.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># return unique words and their counts</span></span><br><span class="line"></span><br><span class="line">cat a5.txt | sort -gr &gt; a6.txt</span><br><span class="line"><span class="comment"># -g ---&gt;compare according to general numerical value</span></span><br><span class="line"><span class="comment"># -r ---&gt; reverse the result of comparisons(from max to min)</span></span><br></pre></td></tr></table></figure>
+<p>More refer to:</p>
+<p>1) <a href="https://www.digitalocean.com/community/tutorials/the-basics-of-using-the-sed-stream-editor-to-manipulate-text-in-linux" target="_blank" rel="noopener">https://www.digitalocean.com/community/tutorials/the-basics-of-using-the-sed-stream-editor-to-manipulate-text-in-linux</a> </p>
+<p>2) <a href="https://www.digitalocean.com/community/tutorials/using-grep-regular-expressions-to-search-for-text-patterns-in-linux" target="_blank" rel="noopener">https://www.digitalocean.com/community/tutorials/using-grep-regular-expressions-to-search-for-text-patterns-in-linux</a></p>
+<p>3) <a href="https://www.geeksforgeeks.org/sed-command-in-linux-unix-with-examples/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/sed-command-in-linux-unix-with-examples/</a></p>
+<p>4) <a href="https://www.geeksforgeeks.org/sed-command-linux-set-2/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/sed-command-linux-set-2/</a></p>
+<h3 id="Column-based-Text-processing-with-awk-scripting-language"><a href="#Column-based-Text-processing-with-awk-scripting-language" class="headerlink" title="Column-based Text processing with awk scripting language"></a>Column-based Text processing with <code>awk</code> scripting language</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;print $1&#125;'</span> haiku.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># $1 --the first field, that is first word of each line in this case.</span></span><br><span class="line"><span class="comment"># $0 --full line</span></span><br><span class="line"></span><br><span class="line">awk <span class="string">'&#123;print&#125;'</span> haiku.txt  <span class="comment"># also print all</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Specify other separators between words (default is space)</span></span><br><span class="line"></span><br><span class="line">awk -Fa <span class="string">'&#123;print $1&#125;'</span> haiku.txt   <span class="comment"># set 'a' as the seperator</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">awk <span class="string">'NR&gt;1'</span> haiku.txt  <span class="comment"># print the number of record greater than 1,i.e, all lines except the first line</span></span><br><span class="line"></span><br><span class="line">awk <span class="string">'NR&gt;2'</span> haiku.txt</span><br><span class="line"></span><br><span class="line">awk <span class="string">'NR&gt;2 &amp;&amp; NR&lt;5'</span> haiku.txt <span class="comment"># print line 3 and 4</span></span><br></pre></td></tr></table></figure>
+<h2 id="Fuzzy-finder"><a href="#Fuzzy-finder" class="headerlink" title="Fuzzy finder"></a>Fuzzy finder</h2><p>Fuzzy finder <code>fzf</code> is a third-party tool, not installed by default. With basic usage, it does interactive processing of standard input. At a more advanced level (not covered in the video below), it provides key bindings and fuzzy completion.</p>
+<p>Fuzzy finder is an interactive finding tools. We could also pipe the return results into other commands.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Example 1</span></span><br><span class="line"></span><br><span class="line">nano $(find ./molecules -<span class="built_in">type</span> f | fzf --height 40%)</span><br><span class="line"><span class="comment"># -- height 40% is used to set height of the fzf windows as 40% of the full screen</span></span><br><span class="line"><span class="comment"># Once you choose the file, it will be opened in nano</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Example 2</span></span><br><span class="line"><span class="built_in">kill</span> -9 $(ps aux | fzf | awk <span class="string">'&#123;print $2&#125;'</span>)</span><br><span class="line"><span class="comment"># ps -- list all the proecess, find the process you want to kill, awk will take only the ID, then kill will kill this process</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Example 3</span></span><br><span class="line">emacs $(find ~/Documents/ -<span class="built_in">type</span> f | fzf)</span><br></pre></td></tr></table></figure>
+<h2 id="Excerise-Day2"><a href="#Excerise-Day2" class="headerlink" title="Excerise -Day2"></a>Excerise -Day2</h2><p>ls -l $(which gcc)</p>
+<p>grep ATOM $(find . -name “*.pdb”)</p>
+<p>Question 8 : Write a function <code>archive()</code> to replace directories with their gzipped archives.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">archive</span></span>()&#123;</span><br><span class="line"><span class="keyword">for</span> dir <span class="keyword">in</span> <span class="variable">$@</span></span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">	tar cvf <span class="variable">$&#123;dir/\/&#125;</span>.tar.gz <span class="variable">$dir</span>/ &amp;&amp; /bin/rm -r <span class="variable">$dir</span></span><br><span class="line">	<span class="comment"># The command after &amp;&amp; will be executed only after the previous command is successfully executed</span></span><br><span class="line">	<span class="keyword">done</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Question 9</p>
+<p>Write a one-line command that finds 5 largest files in the current directory and prints only their names and file sizes in the human-readable format (indicating bytes, kB, MB, GB, …) in the decreasing file-size order. Hint: use <strong>find</strong>, <strong>xargs</strong>, and <strong>awk</strong>.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find . -<span class="built_in">type</span> f| xargs ls -lSh | awk <span class="string">'&#123;print 5 "   " 9&#125;'</span> | head -5</span><br><span class="line"></span><br><span class="line"><span class="comment"># For ls command, -h ---&gt; humman-readable sizes (K, M, G...)   -S --&gt;sort by file size, largest first</span></span><br></pre></td></tr></table></figure>
+<h2 id="Appendix-1-Regular-Expressions"><a href="#Appendix-1-Regular-Expressions" class="headerlink" title="Appendix 1 Regular Expressions"></a>Appendix 1 Regular Expressions</h2><p>Regular expressions could be used in almost every computer language.</p>
+<h3 id="Basic-Regular-expressions"><a href="#Basic-Regular-expressions" class="headerlink" title="Basic Regular expressions"></a>Basic Regular expressions</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Descriptions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>==^==</td>
+<td>matches start of string</td>
+</tr>
+<tr>
+<td>==$==</td>
+<td>matches end of string</td>
+</tr>
+<tr>
+<td>.</td>
+<td>replaces any character</td>
+</tr>
+<tr>
+<td>==\\==</td>
+<td>represent special characters</td>
+</tr>
+<tr>
+<td>()</td>
+<td>groups regular expressions</td>
+</tr>
+<tr>
+<td>*</td>
+<td>matches up zero or more times the preceding character</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat sample | grep ^a <span class="comment"># search content that starts with 'a'</span></span><br><span class="line">cat sample | grep a$ <span class="comment"># search content that ends with'a'</span></span><br><span class="line">grep <span class="string">"d.g"</span> file1 <span class="comment"># Search for words that start with 'd', end with 'g', and have any character in the middel. If there are six dots, that means six characters in the middle.</span></span><br><span class="line">grep <span class="string">"N[oen]n"</span> file1 <span class="comment"># 'o' or 'e' or 'n'; [a-e]  a range of chracters</span></span><br><span class="line">[^1-9] <span class="comment">#==&gt; all characters except number 1 to 9.</span></span><br><span class="line">grep <span class="string">"lak*"</span> file1 <span class="comment"># match any number of occurrences of the preceding letter, including none</span></span><br></pre></td></tr></table></figure>
+<h3 id="Interval-Regular-Expressions"><a href="#Interval-Regular-Expressions" class="headerlink" title="Interval Regular Expressions"></a>Interval Regular Expressions</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Descriptions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{n}</td>
+<td>Matches the preceding character appearing n times exactly</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>Matches the preceding character appearing n times but no more than m times</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>Matches the preceding character only when it appears n times or more</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat sample | grep -E p\&#123;2&#125; <span class="comment"># -E --&gt; extended regular expressions</span></span><br><span class="line"><span class="comment"># find the content with 'p' appearing exactly 2 times in a string one after the oter.(two consecutive 'p')</span></span><br></pre></td></tr></table></figure>
+<h3 id="Extended-Regular-Expressions"><a href="#Extended-Regular-Expressions" class="headerlink" title="Extended Regular Expressions"></a>Extended Regular Expressions</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\+</td>
+<td>Matches one or more occurrence of the previous character</td>
+</tr>
+<tr>
+<td>\\?</td>
+<td>Matches zero or one occurrence of the previous character</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat sample | grep <span class="string">"a\+t"</span></span><br><span class="line"><span class="comment"># Or</span></span><br><span class="line">cat sample | grep -E a\+t</span><br><span class="line"></span><br><span class="line">grep <span class="string">"ba\?b"</span> file1</span><br></pre></td></tr></table></figure>
+<h3 id="Brace-大括号-expansion"><a href="#Brace-大括号-expansion" class="headerlink" title="Brace (大括号) expansion"></a>Brace (大括号) expansion</h3><p>The syntax for brace expansion is either a sequence or a comma separated list of items inside curly braces “{}”.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;aa,bb,cc,dd&#125;  <span class="comment"># ==&gt; aa bb cc dd</span></span><br><span class="line">&#123;1..9&#125;  <span class="comment"># ==&gt; 1 2 3 4 5 6 7 8 9</span></span><br></pre></td></tr></table></figure>
+<h3 id="Shorthand-Characters"><a href="#Shorthand-Characters" class="headerlink" title="Shorthand Characters"></a>Shorthand Characters</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\s</td>
+<td>match whitespaces (a space, a tab or line break)</td>
+</tr>
+<tr>
+<td>\d</td>
+<td>match digits == [0-9]</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>match all the word characters (A-Z a-z) AND _</td>
+</tr>
+<tr>
+<td>\S</td>
+<td>opposite of \s</td>
+</tr>
+<tr>
+<td>\D</td>
+<td>opposite of \d</td>
+</tr>
+<tr>
+<td>\W</td>
+<td>opposite of \w</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Word-Boundaries"><a href="#Word-Boundaries" class="headerlink" title="Word Boundaries"></a>Word Boundaries</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\\&lt;</td>
+<td>used for beginning of the ==word==</td>
+</tr>
+<tr>
+<td>\></td>
+<td>used for end of the ==word==</td>
+</tr>
+<tr>
+<td>\\b</td>
+<td>used for either beginning or end of the ==word==, could replace \\&lt; or \></td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">"e\&gt;"</span> sample <span class="comment">#locate words with 'e' at the end</span></span><br><span class="line">grep <span class="string">"\&lt;a"</span> sample <span class="comment"># locate word with 'a' in the beggining</span></span><br><span class="line">grep <span class="string">"t\b"</span> sample <span class="comment"># locate word with 't' at the end</span></span><br><span class="line">grep <span class="string">"\bt\|t\b"</span> sample <span class="comment"># locate words with t in the beginning or at the end</span></span><br><span class="line"><span class="comment"># Because grep use basic regular expression, we need to escaple | .Or use -E or -P</span></span><br></pre></td></tr></table></figure>
+<h3 id="Anchor"><a href="#Anchor" class="headerlink" title="Anchor"></a>Anchor</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>^</td>
+<td>used to beginning of the ==line==</td>
+</tr>
+<tr>
+<td>$</td>
+<td>used for end of the ==line==</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ol>
+<li><a href="https://www.guru99.com/linux-regular-expressions.html" target="_blank" rel="noopener">https://www.guru99.com/linux-regular-expressions.html</a></li>
+<li></li>
+</ol>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><h3 id="1-Single-quote-double-quote-brackets-and-backstick"><a href="#1-Single-quote-double-quote-brackets-and-backstick" class="headerlink" title="1. Single quote, double quote, brackets and backstick"></a>1. Single quote, double quote, brackets and backstick</h3><ul>
+<li><p>==`…` is the same as \$(…). The command will execute within brackets and then the results will be returned. It’s better to use \$( ).==</p>
+</li>
+<li><p>single quote will not interpolate anything, but double quotes will. (like variables, backticks, certain  escapes). When you enclose characters or variable with single quote then it represents the literal value of the character. Besides, a single quote can’t be used within another single quote.</p>
+<p>Example:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">num=3</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'$num'</span></span><br><span class="line">&gt;&gt; <span class="variable">$num</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$num</span>"</span></span><br><span class="line">&gt;&gt; 3</span><br></pre></td></tr></table></figure>
+<p>如果想让“ ” 里面输出$,需要加 \</p>
+<ul>
+<li><p>If you use any space between the string values then they will be treated as separate value and print separately.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span> <span class="string">'%s\n'</span> <span class="string">"Ubuntu"</span><span class="string">"Centos"</span></span><br><span class="line">&gt;&gt; UbuntuCentos</span><br><span class="line"><span class="built_in">printf</span> <span class="string">'%s\n'</span> <span class="string">"Ubuntu"</span> <span class="string">"Centos"</span></span><br><span class="line">&gt;&gt; Ubuntu</span><br><span class="line">   Centos</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><u>References:</u></p>
+<p><a href="https://linuxhint.com/bash_escape_quotes/#:~:text=The dollar sign ( %24" target="_blank" rel="noopener">https://linuxhint.com/bash_escape_quotes/#:~:text=The%20dollar%20sign%20(%20%24%20)%20and,backticks%2C%20double%20quote%20and%20backslash.</a> and,backticks%2C double quote and backslash.)</p>
+</li>
+</ul>
+
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/Kylehit">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://www.linkedin.com/in/shengkai-gao-b3b8ba138">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://caoxingdong.github.io">Xingdong</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>
